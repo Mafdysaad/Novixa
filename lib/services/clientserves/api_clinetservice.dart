@@ -1,20 +1,8 @@
 import 'package:dio/dio.dart';
 
 class ApiClientService {
-  ApiClientService({
-    required this.baseUrl,
-    this.defaultHeaders,
-    Duration connectTimeout = const Duration(seconds: 10),
-    Duration receiveTimeout = const Duration(seconds: 15),
-  }) {
-    _dio = Dio(
-      BaseOptions(
-        baseUrl: baseUrl,
-        connectTimeout: connectTimeout,
-        receiveTimeout: receiveTimeout,
-        headers: defaultHeaders,
-      ),
-    );
+  ApiClientService({required this.baseUrl, this.defaultHeaders}) {
+    _dio = Dio(BaseOptions(baseUrl: baseUrl, headers: defaultHeaders));
   }
 
   final String baseUrl;
@@ -37,16 +25,12 @@ class ApiClientService {
     Options? options,
     CancelToken? cancelToken,
   }) async {
-    try {
-      return await _dio.post<T>(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-        options: options,
-        cancelToken: cancelToken,
-      );
-    } on DioException {
-      rethrow;
-    }
+    return await _dio.post<T>(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+    );
   }
 }
