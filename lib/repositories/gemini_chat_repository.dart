@@ -1,7 +1,10 @@
-import 'package:ai_chat_bot/models/chat_message_model.dart';
+import 'package:ai_chat_bot/core/error/errors.dart';
+import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
 import 'package:ai_chat_bot/repositories/chat_repository.dart';
 
 import 'package:ai_chat_bot/services/clientserves/gemini_chat_service.dart';
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 
 class GeminiChatRepository implements ChatRepository {
   GeminiChatRepository({required this.geminiChatService});
@@ -9,7 +12,16 @@ class GeminiChatRepository implements ChatRepository {
   final GeminiChatService geminiChatService;
 
   @override
-  Future<ChatMessageModel> sendMessage(List<ChatMessageModel> messages) async {
-    return geminiChatService.sendMessage(messages);
+  Future<Either<ChatMessageModel, ServerFailure>> sendMessage(
+    List<ChatMessageModel> messages,
+  ) async {
+    try {
+      var respons = await geminiChatService.sendMessage(messages);
+      return left(respons);
+    } on DioException catch (e) {
+      return right(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return right(ServerFailure(e.toString()));
+    }
   }
 }

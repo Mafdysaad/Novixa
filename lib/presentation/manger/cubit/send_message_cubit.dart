@@ -1,4 +1,4 @@
-import 'package:ai_chat_bot/models/chat_message_model.dart';
+import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
 import 'package:ai_chat_bot/repositories/chat_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,11 +14,11 @@ class SendMessageCubit extends Cubit<SendMessageState> {
   Future<void> sendMessage(List<ChatMessageModel> messages) async {
     emit(SendMessageLoading());
 
-    try {
-      final response = await _repository.sendMessage(messages);
-      emit(SendMessageSuccess(message: response));
-    } catch (error) {
-      emit(SendMessageFailure(message: error.toString()));
-    }
+    final response = await _repository.sendMessage(messages);
+    response.fold(
+      (chatmessagemodle) =>
+          emit(SendMessageSuccess(chatmodel: chatmessagemodle)),
+      (failure) => emit(SendMessageFailure(message: failure.message)),
+    );
   }
 }

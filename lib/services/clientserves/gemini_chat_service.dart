@@ -1,5 +1,7 @@
+import 'package:ai_chat_bot/core/constant/apiconstant.dart';
 import 'package:dio/dio.dart';
-import 'package:ai_chat_bot/models/chat_message_model.dart';
+
+import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
 import 'package:ai_chat_bot/services/clientserves/api_clinetservice.dart';
 
 class GeminiChatService {
@@ -18,9 +20,14 @@ class GeminiChatService {
     };
 
     final response = await _client.post(
-      '/v1beta/interactions',
+      '${Apiconstant.basurl}/v1beta/interactions',
       data: payload,
-      options: Options(headers: {'Content-Type': 'application/json'}),
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': Apiconstant.apiKay,
+        },
+      ),
     );
 
     return ChatMessageModel.fromJson(response.data);
