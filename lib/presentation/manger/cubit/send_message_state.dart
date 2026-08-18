@@ -7,9 +7,9 @@ class SendMessageInitial extends SendMessageState {}
 class SendMessageLoading extends SendMessageState {}
 
 class SendMessageSuccess extends SendMessageState {
-  SendMessageSuccess({required this.chatmodel});
+  SendMessageSuccess({required this.chatMessageModel});
 
-  final ChatMessageModel chatmodel;
+  final ChatMessageModel chatMessageModel;
 }
 
 class SendMessageFailure extends SendMessageState {

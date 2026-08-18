@@ -21,14 +21,14 @@ class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: 56,
       leading: Padding(
         padding: const EdgeInsets.only(left: 20),
-        child: SvgPicture.network(figmaIconArrowLeftUrl, width: 24, height: 24),
+        child: SvgPicture.asset(figmaIconArrowLeftUrl, width: 24, height: 24),
       ),
       title: Row(
         children: [
           const SizedBox(width: 12),
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.network(
+            child: SvgPicture.asset(
               figmaRobotLogoUrl,
               width: 24,
               height: 36,
@@ -51,7 +51,7 @@ class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
               const SizedBox(height: 2),
               Row(
                 children: [
-                  SvgPicture.network(figmaOnlineDotUrl, width: 6, height: 6),
+                  SvgPicture.asset(figmaOnlineDotUrl, width: 6, height: 6),
                   const SizedBox(width: 5),
                   const Text(
                     'Online',
@@ -72,9 +72,9 @@ class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(right: 18),
           child: Row(
             children: [
-              SvgPicture.network(figmaIconVolumeUrl, width: 24, height: 24),
+              SvgPicture.asset(figmaIconVolumeUrl, width: 24, height: 24),
               const SizedBox(width: 19),
-              SvgPicture.network(figmaIconExportUrl, width: 24, height: 24),
+              SvgPicture.asset(figmaIconExportUrl, width: 24, height: 24),
             ],
           ),
         ),

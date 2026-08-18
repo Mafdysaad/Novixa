@@ -1,5 +1,6 @@
 import 'package:ai_chat_bot/core/error/errors.dart';
 import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
+import 'package:ai_chat_bot/models/chat_message_model/content.dart';
 import 'package:ai_chat_bot/repositories/chat_repository.dart';
 
 import 'package:ai_chat_bot/services/clientserves/gemini_chat_service.dart';
@@ -13,7 +14,7 @@ class GeminiChatRepository implements ChatRepository {
 
   @override
   Future<Either<ChatMessageModel, ServerFailure>> sendMessage(
-    List<ChatMessageModel> messages,
+    List<Content> messages,
   ) async {
     try {
       var respons = await geminiChatService.sendMessage(messages);

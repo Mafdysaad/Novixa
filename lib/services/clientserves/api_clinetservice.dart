@@ -1,21 +1,18 @@
 import 'package:dio/dio.dart';
 
 class ApiClientService {
-  ApiClientService({required this.baseUrl, this.defaultHeaders}) {
-    _dio = Dio(BaseOptions(baseUrl: baseUrl, headers: defaultHeaders));
-  }
+  ApiClientService({required this.dio, this.defaultHeaders});
 
-  final String baseUrl;
   final Map<String, dynamic>? defaultHeaders;
 
-  late final Dio _dio;
+  final Dio dio;
 
   void setAuthorizationToken(String token) {
-    _dio.options.headers['Authorization'] = 'Bearer $token';
+    dio.options.headers['Authorization'] = 'Bearer $token';
   }
 
   void removeAuthorizationToken() {
-    _dio.options.headers.remove('Authorization');
+    dio.options.headers.remove('Authorization');
   }
 
   Future<Response<T>> post<T>(
@@ -25,7 +22,7 @@ class ApiClientService {
     Options? options,
     CancelToken? cancelToken,
   }) async {
-    return await _dio.post<T>(
+    return await dio.post<T>(
       path,
       data: data,
       queryParameters: queryParameters,

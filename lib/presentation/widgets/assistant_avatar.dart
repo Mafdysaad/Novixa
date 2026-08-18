@@ -1,5 +1,6 @@
 import 'package:ai_chat_bot/presentation/widgets/figma_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class AssistantAvatar extends StatelessWidget {
   const AssistantAvatar({super.key, this.size = 26});
@@ -23,7 +24,7 @@ class AssistantAvatar extends StatelessWidget {
         ],
       ),
       child: ClipOval(
-        child: Image.network(
+        child: SvgPicture.asset(
           figmaRobotLogoUrl,
           width: size,
           height: size,

@@ -50,7 +50,7 @@ class ChatMessageInputBar extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {},
-                child: SvgPicture.network(
+                child: SvgPicture.asset(
                   figmaIconMicrophoneUrl,
                   width: 24,
                   height: 24,
@@ -59,7 +59,7 @@ class ChatMessageInputBar extends StatelessWidget {
               const SizedBox(width: 16),
               GestureDetector(
                 onTap: onSend,
-                child: SvgPicture.network(
+                child: SvgPicture.asset(
                   figmaIconSendUrl,
                   width: 24,
                   height: 24,

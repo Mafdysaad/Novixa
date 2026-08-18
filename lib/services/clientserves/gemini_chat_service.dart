@@ -1,4 +1,5 @@
 import 'package:ai_chat_bot/core/constant/apiconstant.dart';
+import 'package:ai_chat_bot/models/chat_message_model/content.dart';
 import 'package:dio/dio.dart';
 
 import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
@@ -11,7 +12,7 @@ class GeminiChatService {
 
   /// Sends a list of `ChatMessageModel` to Gemini and returns the first text reply as `ChatMessageModel`.
   Future<ChatMessageModel> sendMessage(
-    List<ChatMessageModel> input, {
+    List<Content> input, {
     String model = 'gemini-3.5-flash',
   }) async {
     final payload = {
@@ -20,7 +21,7 @@ class GeminiChatService {
     };
 
     final response = await _client.post(
-      '${Apiconstant.basurl}/v1beta/interactions',
+      '/v1beta/interactions',
       data: payload,
       options: Options(
         headers: {
