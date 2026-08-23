@@ -20,6 +20,7 @@ class LodingMessageList extends StatelessWidget {
     return Gnerallistview(
       scrollController: _scrollController,
       messages: messages,
+      itemcount: messages.length + 1,
       itemBuilder: (context, index) {
         var newIndex = messages.length - index;
         final isUser = index.isOdd;

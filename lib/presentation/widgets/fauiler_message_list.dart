@@ -25,6 +25,7 @@ class FauilerMessageList extends StatelessWidget {
     return Gnerallistview(
       scrollController: _scrollController,
       messages: messages,
+      itemcount: messages.length,
       itemBuilder: (context, index) {
         final isUser = index.isEven;
         var newIndex = messages.length - (index + 1);

@@ -7,9 +7,11 @@ class Gnerallistview extends StatelessWidget {
     required ScrollController scrollController,
     required this.messages,
     required this.itemBuilder,
+    required this.itemcount,
   }) : _scrollController = scrollController;
   final ScrollController _scrollController;
   final List<Content> messages;
+  final int itemcount;
   final Widget? Function(BuildContext, int) itemBuilder;
 
   @override
@@ -19,7 +21,7 @@ class Gnerallistview extends StatelessWidget {
       physics: const ClampingScrollPhysics(),
       controller: _scrollController,
       padding: const EdgeInsets.symmetric(vertical: 20),
-      itemCount: messages.length + 1,
+      itemCount: itemcount,
       separatorBuilder: (_, __) => const SizedBox(height: 24),
       itemBuilder: itemBuilder,
     );

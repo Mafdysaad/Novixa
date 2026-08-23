@@ -20,6 +20,7 @@ class MessagesList extends StatelessWidget {
     return Gnerallistview(
       scrollController: _scrollController,
       messages: messages,
+      itemcount: messages.length,
       itemBuilder: (context, index) {
         var newIndex = messages.length - (index + 1);
         final isUser = index.isEven;
