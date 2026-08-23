@@ -39,12 +39,10 @@ class ServerFailure extends Failure {
         return const ServerFailure('Request was cancelled');
 
       case DioExceptionType.connectionError:
-        return ServerFailure('Connection Error: ${e.message ?? "No internet"}');
+        return ServerFailure('Connection Error:"No internet"');
 
       case DioExceptionType.unknown:
-        return ServerFailure(
-          'Unknown Error: ${e.message ?? "Something went wrong"}',
-        );
+        return ServerFailure("Something went wrong");
     }
   }
 
@@ -56,18 +54,16 @@ class ServerFailure extends Failure {
 
     switch (statusCode) {
       case 400:
-        return ServerFailure(response?['message'] ?? 'Bad request');
+        return ServerFailure('Bad request');
 
       case 401:
-        return ServerFailure(
-          response?['message'] ?? 'Unauthorized (check API key)',
-        );
+        return ServerFailure('Unauthorized (check API key)');
 
       case 403:
-        return ServerFailure(response?['message'] ?? 'Forbidden (API blocked)');
+        return ServerFailure('Forbidden (API blocked)');
 
-      case 404:
-        return const ServerFailure('City name is incorrect.');
+      // case 404:
+      //   return const ServerFailure('City name is incorrect.');
 
       case 429:
         return const ServerFailure('API limit reached');
@@ -81,10 +77,10 @@ class ServerFailure extends Failure {
   }
 }
 
-class NoInternetFailure extends Failure {
-  const NoInternetFailure() : super('No internet connection');
-}
+// class NoInternetFailure extends Failure {
+//   const NoInternetFailure() : super('No internet connection');
+// }
 
-class CacheFailure extends Failure {
-  const CacheFailure() : super('No cached data available');
-}
+// class CacheFailure extends Failure {
+//   const CacheFailure() : super('No cached data available');
+// }
