@@ -11,6 +11,7 @@ import 'package:ai_chat_bot/presentation/widgets/chat_bot_app_bar.dart';
 import 'package:ai_chat_bot/presentation/widgets/chat_message_input_bar.dart';
 import 'package:ai_chat_bot/presentation/widgets/fauiler_message_list.dart';
 import 'package:ai_chat_bot/presentation/widgets/figma_assets.dart';
+import 'package:ai_chat_bot/presentation/widgets/loding_message_list.dart';
 import 'package:ai_chat_bot/presentation/widgets/messages_list.dart';
 import 'package:ai_chat_bot/repositories/chat_repository.dart';
 import 'package:flutter/material.dart';
@@ -92,10 +93,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                           },
                           builder: (context, state) {
                             if (state is SendMessageLoading) {
-                              return MessagesList(
+                              return LodingMessageList(
                                 scrollController: _scrollController,
                                 messages: messages,
-                                isLoding: true,
                               );
                             }
                             if (state is SendMessageFailure) {
@@ -108,7 +108,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                             return MessagesList(
                               scrollController: _scrollController,
                               messages: messages,
-                              isLoding: false,
                             );
                           },
                         ),
@@ -119,10 +118,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                         child: ChatMessageInputBar(
                           controller: _messageController,
                           onSend: () {
-                            if (context.read<SendMessageCubit>().state
-                                is SendMessageFailure) {
-                              messages.removeLast();
-                            }
                             _handleSend();
                             context.read<SendMessageCubit>().sendMessage(
                               messages,

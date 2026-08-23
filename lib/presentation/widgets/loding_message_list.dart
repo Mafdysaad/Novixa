@@ -4,8 +4,8 @@ import 'package:ai_chat_bot/presentation/widgets/ai_bubble.dart';
 import 'package:ai_chat_bot/presentation/widgets/user_bubble.dart';
 import 'package:flutter/material.dart';
 
-class MessagesList extends StatelessWidget {
-  const MessagesList({
+class LodingMessageList extends StatelessWidget {
+  const LodingMessageList({
     super.key,
     required ScrollController scrollController,
     required this.messages,
@@ -21,13 +21,15 @@ class MessagesList extends StatelessWidget {
       physics: const ClampingScrollPhysics(),
       controller: _scrollController,
       padding: const EdgeInsets.symmetric(vertical: 20),
-      itemCount: messages.length,
+      itemCount: messages.length + 1,
       separatorBuilder: (_, __) => const SizedBox(height: 24),
       itemBuilder: (context, index) {
         print("=================> $index");
-        var newIndex = messages.length - (index + 1);
+        print("=================> ${messages.length}");
+
+        var newIndex = messages.length - index;
         final isUser = index.isEven;
-        if (index == messages.length + index) {
+        if (index == 0) {
           return Padding(
             padding: EdgeInsets.only(
               left: isUser ? 40 : 62,
