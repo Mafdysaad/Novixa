@@ -2,6 +2,7 @@ import 'package:ai_chat_bot/models/chat_message_model/content.dart';
 import 'package:ai_chat_bot/presentation/manger/cubit/send_message_cubit.dart';
 import 'package:ai_chat_bot/presentation/widgets/ai_bubble.dart';
 import 'package:ai_chat_bot/presentation/widgets/fauiler_bubble.dart';
+import 'package:ai_chat_bot/presentation/widgets/gneralListView.dart';
 
 import 'package:ai_chat_bot/presentation/widgets/user_bubble.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +22,9 @@ class FauilerMessageList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      reverse: true,
-      physics: const ClampingScrollPhysics(),
-      controller: _scrollController,
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      itemCount: messages.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 24),
+    return Gnerallistview(
+      scrollController: _scrollController,
+      messages: messages,
       itemBuilder: (context, index) {
         final isUser = index.isEven;
         var newIndex = messages.length - (index + 1);

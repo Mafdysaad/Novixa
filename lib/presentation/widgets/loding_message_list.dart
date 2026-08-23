@@ -1,5 +1,6 @@
 import 'package:ai_chat_bot/models/chat_message_model/content.dart';
 import 'package:ai_chat_bot/presentation/widgets/ai_bubble.dart';
+import 'package:ai_chat_bot/presentation/widgets/gneralListView.dart';
 
 import 'package:ai_chat_bot/presentation/widgets/user_bubble.dart';
 import 'package:flutter/material.dart';
@@ -16,19 +17,12 @@ class LodingMessageList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      reverse: true,
-      physics: const ClampingScrollPhysics(),
-      controller: _scrollController,
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      itemCount: messages.length + 1,
-      separatorBuilder: (_, __) => const SizedBox(height: 24),
+    return Gnerallistview(
+      scrollController: _scrollController,
+      messages: messages,
       itemBuilder: (context, index) {
-        print("=================> $index");
-        print("=================> ${messages.length}");
-
         var newIndex = messages.length - index;
-        final isUser = index.isEven;
+        final isUser = index.isOdd;
         if (index == 0) {
           return Padding(
             padding: EdgeInsets.only(
