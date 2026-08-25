@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:ai_chat_bot/core/service/service_locator.dart';
-import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
 
 import 'package:ai_chat_bot/models/chat_message_model/content.dart';
 import 'package:ai_chat_bot/presentation/manger/cubit/send_message_cubit.dart';
