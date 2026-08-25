@@ -16,6 +16,9 @@ class GeminiChatRepository implements ChatRepository {
   Future<Either<ChatMessageModel, ServerFailure>> sendMessage(
     List<Content> messages,
   ) async {
+    if (messages.length > 20) {
+      messages = messages.sublist(-5);
+    }
     try {
       var respons = await geminiChatService.sendMessage(messages);
       return left(respons);
