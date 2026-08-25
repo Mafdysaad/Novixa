@@ -30,30 +30,18 @@ class FauilerMessageList extends StatelessWidget {
         final isUser = index.isEven;
         var newIndex = messages.length - (index + 1);
         if (index == 0) {
-          return Padding(
-            padding: EdgeInsets.only(
-              left: isUser ? 40 : 62,
-              right: isUser ? 29 : 40,
-            ),
-            child: FauilerBubble(
-              message: messages[messages.length - 1].text!,
-              errormessage: text,
-              onpressed: () {
-                context.read<SendMessageCubit>().sendMessage(messages);
-              },
-            ),
+          return FauilerBubble(
+            message: messages[messages.length - 1].text!,
+            errormessage: text,
+            onpressed: () {
+              context.read<SendMessageCubit>().sendMessage(messages);
+            },
           );
         }
 
-        return Padding(
-          padding: EdgeInsets.only(
-            left: isUser ? 40 : 62,
-            right: isUser ? 29 : 40,
-          ),
-          child: !isUser
-              ? AiBubble(message: messages[newIndex].text!)
-              : UserBubble(message: messages[newIndex].text!),
-        );
+        return !isUser
+            ? AiBubble(message: messages[newIndex].text!)
+            : UserBubble(message: messages[newIndex].text!);
       },
     );
   }

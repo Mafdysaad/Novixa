@@ -25,24 +25,12 @@ class MessagesList extends StatelessWidget {
         var newIndex = messages.length - (index + 1);
         final isUser = index.isEven;
         if (index == messages.length + index) {
-          return Padding(
-            padding: EdgeInsets.only(
-              left: isUser ? 40 : 62,
-              right: isUser ? 29 : 40,
-            ),
-            child: AiBubble(message: 'thina..'),
-          );
+          return AiBubble(message: 'thina..');
         }
 
-        return Padding(
-          padding: EdgeInsets.only(
-            left: isUser ? 40 : 62,
-            right: isUser ? 29 : 40,
-          ),
-          child: !isUser
-              ? AiBubble(message: messages[newIndex].text!)
-              : UserBubble(message: messages[newIndex].text!),
-        );
+        return !isUser
+            ? AiBubble(message: messages[newIndex].text!)
+            : UserBubble(message: messages[newIndex].text!);
       },
     );
   }

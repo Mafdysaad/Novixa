@@ -83,38 +83,46 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                       ),
                       const SizedBox(height: 18),
                       Expanded(
-                        child: BlocConsumer<SendMessageCubit, SendMessageState>(
-                          listener: (context, state) {
-                            if (state is SendMessageSuccess) {
-                              messages.addAll(
-                                state.chatMessageModel.steps![1].content!,
-                              );
-                            }
-                          },
-                          builder: (context, state) {
-                            if (state is SendMessageLoading) {
-                              return LodingMessageList(
-                                scrollController: _scrollController,
-                                messages: messages,
-                              );
-                            }
-                            if (state is SendMessageFailure) {
-                              return FauilerMessageList(
-                                scrollController: _scrollController,
-                                messages: messages,
-                                text: state.message,
-                              );
-                            }
-                            return MessagesList(
-                              scrollController: _scrollController,
-                              messages: messages,
-                            );
-                          },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child:
+                              BlocConsumer<SendMessageCubit, SendMessageState>(
+                                listener: (context, state) {
+                                  if (state is SendMessageSuccess) {
+                                    messages.addAll(
+                                      state.chatMessageModel.steps![1].content!,
+                                    );
+                                  }
+                                },
+                                builder: (context, state) {
+                                  if (state is SendMessageLoading) {
+                                    return LodingMessageList(
+                                      scrollController: _scrollController,
+                                      messages: messages,
+                                    );
+                                  }
+                                  if (state is SendMessageFailure) {
+                                    return FauilerMessageList(
+                                      scrollController: _scrollController,
+                                      messages: messages,
+                                      text: state.message,
+                                    );
+                                  }
+                                  return MessagesList(
+                                    scrollController: _scrollController,
+                                    messages: messages,
+                                  );
+                                },
+                              ),
                         ),
                       ),
                       const SizedBox(height: 16),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
+                        padding: const EdgeInsets.only(
+                          bottom: 20,
+                          right: 25,
+                          left: 25,
+                        ),
                         child: ChatMessageInputBar(
                           controller: _messageController,
                           onSend: () {
