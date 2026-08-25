@@ -1,4 +1,3 @@
-import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
 import 'package:ai_chat_bot/models/chat_message_model/content.dart';
 import 'package:ai_chat_bot/repositories/chat_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
