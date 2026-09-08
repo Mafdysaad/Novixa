@@ -17,10 +17,10 @@ class GeminiChatRepository implements ChatRepository {
     List<Content> messages,
   ) async {
     if (messages.length > 20) {
-      messages = messages.sublist(-5);
+      messages = messages.sublist(messages.length - 5);
     }
     try {
-      var respons = await geminiChatService.sendMessage(messages);
+      var respons = await geminiChatService.sendMessage(input: messages);
       return left(respons);
     } on DioException catch (e) {
       return right(ServerFailure.fromDioException(e));
