@@ -17,7 +17,7 @@ class ChatMessageModel {
     this.object,
     this.model,
   });
-  var content = ChatMessageModel().steps!.first.content;
+
   factory ChatMessageModel.fromJson(Map<String, dynamic> json) {
     return ChatMessageModel(
       id: json['id'] as String?,
