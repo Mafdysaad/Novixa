@@ -79,6 +79,17 @@ DioException _getretryableExaption() {
   );
 }
 
+DioException _getnonretryableExaption() {
+  final requestoptions = RequestOptions(
+    path: 'https://generativelanguage.googleapis.com/v1beta/interactions',
+  );
+  return DioException(
+    response: Response(requestOptions: requestoptions, statusCode: 400),
+    requestOptions: requestoptions,
+    type: DioExceptionType.badResponse,
+  );
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   late ApiclientMoking apickintMoking;
@@ -136,6 +147,33 @@ void main() async {
         ).callCount;
         expect(callcount, 2);
         expect(result, isA<ChatMessageModel>());
+      },
+    );
+
+    test(
+      'failed on first attempt and cannot be retried => non-retryable exception ',
+      () async {
+        when(
+          () => apickintMoking.post(
+            any(),
+            data: any(named: 'data'),
+            options: any(named: 'options'),
+          ),
+        ).thenAnswer((_) {
+          throw _getnonretryableExaption();
+        });
+        await expectLater(
+          () => geminiChatService.sendMessage(input: []),
+          throwsA(isA<DioException>()),
+        );
+        int callcount = verify(
+          () => apickintMoking.post(
+            any(),
+            data: any(named: 'data'),
+            options: any(named: 'options'),
+          ),
+        ).callCount;
+        expect(callcount, 1);
       },
     );
   });
