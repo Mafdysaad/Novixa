@@ -176,5 +176,35 @@ void main() async {
         expect(callcount, 1);
       },
     );
+
+    test(
+      'failed on secon attempt and successfully sent on third attempt => retryable exception ',
+      () async {
+        int count = 0;
+        when(
+          () => apickintMoking.post(
+            any(),
+            data: any(named: 'data'),
+            options: any(named: 'options'),
+          ),
+        ).thenAnswer((_) {
+          count++;
+          if (count == 3) {
+            return _getSuccessResponse();
+          }
+          throw _getretryableExaption();
+        });
+        var result = await geminiChatService.sendMessage(input: []);
+        expect(result, isA<ChatMessageModel>());
+        int callcount = verify(
+          () => apickintMoking.post(
+            any(),
+            data: any(named: 'data'),
+            options: any(named: 'options'),
+          ),
+        ).callCount;
+        expect(callcount, 3);
+      },
+    );
   });
 }
