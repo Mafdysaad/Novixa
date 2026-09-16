@@ -4,18 +4,16 @@ import 'package:ai_chat_bot/core/service/service_locator.dart';
 
 import 'package:ai_chat_bot/models/chat_message_model/content.dart';
 import 'package:ai_chat_bot/presentation/manger/cubit/send_message_cubit.dart';
-import 'package:ai_chat_bot/presentation/manger/cubit/send_message_state.dart';
+
+import 'package:ai_chat_bot/presentation/widgets/blocConsumer.dart';
 
 import 'package:ai_chat_bot/presentation/widgets/chat_bot_app_bar.dart';
 import 'package:ai_chat_bot/presentation/widgets/chat_message_input_bar.dart';
-import 'package:ai_chat_bot/presentation/widgets/fauiler_message_list.dart';
-import 'package:ai_chat_bot/presentation/widgets/figma_assets.dart';
-import 'package:ai_chat_bot/presentation/widgets/loding_message_list.dart';
-import 'package:ai_chat_bot/presentation/widgets/messages_list.dart';
+import 'package:ai_chat_bot/presentation/widgets/divider.dart';
+
 import 'package:ai_chat_bot/repositories/chat_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatBotScreen extends StatefulWidget {
   const ChatBotScreen({super.key});
@@ -75,62 +73,23 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                   child: Column(
                     children: [
                       const SizedBox(height: 12),
-                      SvgPicture.asset(
-                        figmaDividerLineUrl,
-                        width: contentWidth,
-                        height: 1,
-                      ),
+                      CustomDivider(contentWidth: contentWidth),
                       const SizedBox(height: 18),
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25),
-                          child:
-                              BlocConsumer<SendMessageCubit, SendMessageState>(
-                                listener: (context, state) {
-                                  if (state is SendMessageSuccess) {
-                                    messages.addAll(
-                                      state.chatMessageModel.steps![1].content!,
-                                    );
-                                  }
-                                },
-                                builder: (context, state) {
-                                  if (state is SendMessageLoading) {
-                                    return LodingMessageList(
-                                      scrollController: _scrollController,
-                                      messages: messages,
-                                    );
-                                  }
-                                  if (state is SendMessageFailure) {
-                                    return FauilerMessageList(
-                                      scrollController: _scrollController,
-                                      messages: messages,
-                                      text: state.message,
-                                    );
-                                  }
-                                  return MessagesList(
-                                    scrollController: _scrollController,
-                                    messages: messages,
-                                  );
-                                },
-                              ),
+                        child: blocConsumerList(
+                          messages: messages,
+                          scrollController: _scrollController,
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 20,
-                          right: 25,
-                          left: 25,
-                        ),
-                        child: ChatMessageInputBar(
-                          controller: _messageController,
-                          onSend: () {
-                            _handleSend();
-                            context.read<SendMessageCubit>().sendMessage(
-                              messages,
-                            );
-                          },
-                        ),
+                      ChatMessageInputBar(
+                        controller: _messageController,
+                        onSend: () {
+                          _handleSend();
+                          context.read<SendMessageCubit>().sendMessage(
+                            messages,
+                          );
+                        },
                       ),
                     ],
                   ),
