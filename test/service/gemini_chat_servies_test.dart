@@ -206,5 +206,29 @@ void main() async {
         expect(callcount, 3);
       },
     );
+
+    test('failed on all attempts  ', () async {
+      when(
+        () => apickintMoking.post(
+          any(),
+          data: any(named: 'data'),
+          options: any(named: 'options'),
+        ),
+      ).thenAnswer((_) {
+        throw _getretryableExaption();
+      });
+      await expectLater(
+        geminiChatService.sendMessage(input: []),
+        throwsA(isA<DioException>()),
+      );
+      int callcount = verify(
+        () => apickintMoking.post(
+          any(),
+          data: any(named: 'data'),
+          options: any(named: 'options'),
+        ),
+      ).callCount;
+      expect(callcount, 3);
+    });
   });
 }
