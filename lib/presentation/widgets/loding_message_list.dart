@@ -29,7 +29,7 @@ class LodingMessageList extends StatelessWidget {
           return DotIndicator();
         }
 
-        return !isUser
+        return isUser
             ? AiBubble(message: messages[newIndex].text!)
             : UserBubble(message: messages[newIndex].text!);
       },

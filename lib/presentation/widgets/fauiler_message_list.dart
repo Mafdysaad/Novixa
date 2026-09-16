@@ -39,7 +39,7 @@ class FauilerMessageList extends StatelessWidget {
           );
         }
 
-        return !isUser
+        return isUser
             ? AiBubble(message: messages[newIndex].text!)
             : UserBubble(message: messages[newIndex].text!);
       },

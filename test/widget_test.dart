@@ -5,7 +5,6 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:ai_chat_bot/core/error/errors.dart';
 import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
 import 'package:ai_chat_bot/models/chat_message_model/content.dart';
 import 'package:ai_chat_bot/models/chat_message_model/step.dart';

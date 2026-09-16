@@ -28,7 +28,7 @@ class MessagesList extends StatelessWidget {
           return AiBubble(message: 'thina..');
         }
 
-        return !isUser
+        return isUser
             ? AiBubble(message: messages[newIndex].text!)
             : UserBubble(message: messages[newIndex].text!);
       },
