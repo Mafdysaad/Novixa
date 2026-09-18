@@ -1,3 +1,4 @@
+import 'package:ai_chat_bot/presentation/manger/cubit/send_message_cubit.dart';
 import 'package:ai_chat_bot/repositories/chat_repository.dart';
 import 'package:ai_chat_bot/repositories/gemini_chat_repository.dart';
 import 'package:ai_chat_bot/services/clientserves/api_clinetservice.dart';
@@ -22,5 +23,8 @@ Future<void> setup() async {
   );
   getIt.registerLazySingleton<ChatRepository>(
     () => GeminiChatRepository(geminiChatService: getIt<GeminiChatService>()),
+  );
+  getIt.registerFactory<SendMessageCubit>(
+    () => SendMessageCubit(repository: getIt<GeminiChatRepository>()),
   );
 }
