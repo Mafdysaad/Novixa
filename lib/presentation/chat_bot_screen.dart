@@ -62,7 +62,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       backgroundColor: Colors.white,
       appBar: const ChatBotAppBar(),
       body: BlocProvider(
-        create: (_) => SendMessageCubit(repository: getIt<ChatRepository>()),
+        create: (_) => getIt.get<SendMessageCubit>(),
         child: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
