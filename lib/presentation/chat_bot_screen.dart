@@ -4,6 +4,7 @@ import 'package:ai_chat_bot/core/service/service_locator.dart';
 
 import 'package:ai_chat_bot/models/chat_message_model/content.dart';
 import 'package:ai_chat_bot/presentation/manger/cubit/send_message_cubit.dart';
+import 'package:ai_chat_bot/presentation/manger/cubit/send_message_state.dart';
 
 import 'package:ai_chat_bot/presentation/widgets/blocConsumer.dart';
 
@@ -81,12 +82,20 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-                      ChatMessageInputBar(
-                        controller: _messageController,
-                        onSend: () {
-                          _handleSend();
-                          context.read<SendMessageCubit>().sendMessage(
-                            messages,
+                      BlocBuilder<SendMessageCubit, SendMessageState>(
+                        builder: (context, state) {
+                          bool isloding = state is SendMessageLoading;
+                          return AbsorbPointer(
+                            absorbing: isloding,
+                            child: ChatMessageInputBar(
+                              controller: _messageController,
+                              onSend: () {
+                                _handleSend();
+                                context.read<SendMessageCubit>().sendMessage(
+                                  messages,
+                                );
+                              },
+                            ),
                           );
                         },
                       ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ai_chat_bot/core/error/errors.dart';
 import 'package:ai_chat_bot/core/service/service_locator.dart';
 import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
@@ -199,6 +201,34 @@ void main() {
           ),
           findsOneWidget,
         );
+      });
+      testWidgets('freazi the ui when user send message', (tester) async {
+        final completer = Completer<Either<ChatMessageModel, ServerFailure>>();
+        when(() => fackgeminchatrepository.sendMessage(any())).thenAnswer((_) {
+          return completer.future;
+        });
+        await tester.pumpWidget(MaterialApp(home: ChatBotScreen()));
+        await tester.pumpAndSettle();
+        var textfaild = find.byType(ChatMessageInputBar);
+        await tester.enterText(textfaild, 'Hi Mafdy');
+        await tester.pumpAndSettle();
+        var send_icon = find.byKey(const Key('Send_Icon'));
+        await tester.tap(send_icon);
+        await tester.pump();
+        expect(find.byType(DotIndicator), findsOneWidget);
+        await tester.enterText(textfaild, 'New message');
+        await tester.tap(send_icon, warnIfMissed: false);
+        await tester.pump();
+        verify(() => fackgeminchatrepository.sendMessage(any())).called(1);
+        expect(
+          find.descendant(
+            of: find.byType(FauilerBubble),
+            matching: find.text('New message'),
+          ),
+          findsNothing,
+        );
+        completer.complete(right(_getServerFailurMessage()));
+        await tester.pumpAndSettle();
       });
     });
   });

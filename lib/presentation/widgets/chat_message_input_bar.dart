@@ -31,6 +31,7 @@ class ChatMessageInputBar extends StatelessWidget {
               Expanded(
                 child: TextField(
                   controller: controller,
+
                   style: const TextStyle(
                     color: Color(0xFF1F2937),
                     fontSize: 13,
