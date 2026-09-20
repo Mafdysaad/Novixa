@@ -10,6 +10,7 @@ import 'package:ai_chat_bot/presentation/widgets/ai_bubble.dart';
 import 'package:ai_chat_bot/presentation/widgets/chat_message_input_bar.dart';
 import 'package:ai_chat_bot/presentation/widgets/dotIndicator.dart';
 import 'package:ai_chat_bot/presentation/widgets/fauiler_bubble.dart';
+import 'package:ai_chat_bot/presentation/widgets/user_bubble.dart';
 
 import 'package:ai_chat_bot/repositories/gemini_chat_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -135,11 +136,15 @@ void main() {
         var send_icon = find.byKey(const Key('Send_Icon'));
         await tester.tap(send_icon);
         await tester.pumpAndSettle();
-
-        var icon = find.byIcon(Icons.rotate_right_sharp);
+        var icon = find.descendant(
+          of: find.byType(FauilerBubble),
+          matching: find.byIcon(Icons.rotate_right_sharp),
+        );
         await tester.tap(icon);
         await tester.pumpAndSettle();
         expect(find.byType(AiBubble), findsOneWidget);
+        expect(find.byType(UserBubble), findsOneWidget);
+        expect(find.byType(FauilerBubble), findsNothing);
       });
     });
   });
