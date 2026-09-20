@@ -24,7 +24,7 @@ class blocConsumerList extends StatelessWidget {
       child: BlocConsumer<SendMessageCubit, SendMessageState>(
         listener: (context, state) {
           if (state is SendMessageSuccess) {
-            messages.addAll(state.chatMessageModel.steps![1].content!);
+            messages.addAll(state.chatMessageModel.steps!.last.content!);
           }
         },
         builder: (context, state) {

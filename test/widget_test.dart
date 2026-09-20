@@ -23,7 +23,7 @@ ChatMessageModel _getChatMessageModel() => ChatMessageModel(
   status: 'good',
   usage: Usage(totalTokens: 10),
   steps: [
-    Step(
+    stepp(
       type: 'dsd',
       content: [Content(type: 'text', text: 'hellow')],
     ),

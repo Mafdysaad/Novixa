@@ -5,7 +5,7 @@ class ChatMessageModel {
   String? id;
   String? status;
   Usage? usage;
-  List<Step>? steps;
+  List<stepp>? steps;
   String? object;
   String? model;
 
@@ -26,7 +26,7 @@ class ChatMessageModel {
           ? null
           : Usage.fromJson(json['usage'] as Map<String, dynamic>),
       steps: (json['steps'] as List<dynamic>?)
-          ?.map((e) => Step.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => stepp.fromJson(e as Map<String, dynamic>))
           .toList(),
       object: json['object'] as String?,
       model: json['model'] as String?,

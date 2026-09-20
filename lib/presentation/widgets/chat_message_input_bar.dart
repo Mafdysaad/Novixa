@@ -64,6 +64,7 @@ class ChatMessageInputBar extends StatelessWidget {
                   figmaIconSendUrl,
                   width: 24,
                   height: 24,
+                  key: const Key('Send_Icon'),
                 ),
               ),
             ],
