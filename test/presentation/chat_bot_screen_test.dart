@@ -146,7 +146,7 @@ void main() {
         expect(find.byType(UserBubble), findsOneWidget);
         expect(find.byType(FauilerBubble), findsNothing);
       });
-      testWidgets('failed at all retry attempt', (tester) async {
+      testWidgets('failed at all retry attempts', (tester) async {
         when(() => fackgeminchatrepository.sendMessage(any())).thenAnswer((
           _,
         ) async {
@@ -171,6 +171,34 @@ void main() {
         expect(find.byType(AiBubble), findsNothing);
         expect(find.byType(UserBubble), findsNothing);
         expect(find.byType(FauilerBubble), findsOneWidget);
+      });
+      testWidgets('sending a new message', (tester) async {
+        when(() => fackgeminchatrepository.sendMessage(any())).thenAnswer((
+          _,
+        ) async {
+          return Future.delayed(Duration(seconds: 2), () {
+            return right(_getServerFailurMessage());
+          });
+        });
+        await tester.pumpWidget(MaterialApp(home: ChatBotScreen()));
+        await tester.pumpAndSettle();
+        var textfaild = find.byType(ChatMessageInputBar);
+        await tester.enterText(textfaild, 'Hi Mafdy');
+        await tester.pumpAndSettle();
+        var send_icon = find.byKey(const Key('Send_Icon'));
+        await tester.tap(send_icon);
+        await tester.pumpAndSettle();
+        await tester.enterText(textfaild, 'New message');
+        await tester.pumpAndSettle();
+        await tester.tap(send_icon);
+        await tester.pumpAndSettle();
+        expect(
+          find.descendant(
+            of: find.byType(FauilerBubble),
+            matching: find.text('New message'),
+          ),
+          findsOneWidget,
+        );
       });
     });
   });

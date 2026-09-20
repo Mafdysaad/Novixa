@@ -31,7 +31,7 @@ class FauilerMessageList extends StatelessWidget {
         var newIndex = messages.length - (index + 1);
         if (index == 0) {
           return FauilerBubble(
-            message: messages[messages.length - 1].text!,
+            message: messages.last.text!,
             errormessage: text,
             onpressed: () {
               context.read<SendMessageCubit>().sendMessage(messages);
