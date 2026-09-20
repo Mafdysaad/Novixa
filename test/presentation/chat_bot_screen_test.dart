@@ -5,6 +5,7 @@ import 'package:ai_chat_bot/models/chat_message_model/step.dart';
 import 'package:ai_chat_bot/models/chat_message_model/usage.dart';
 import 'package:ai_chat_bot/presentation/chat_bot_screen.dart';
 import 'package:ai_chat_bot/presentation/manger/cubit/send_message_cubit.dart';
+import 'package:ai_chat_bot/presentation/widgets/ai_bubble.dart';
 import 'package:ai_chat_bot/presentation/widgets/chat_message_input_bar.dart';
 import 'package:ai_chat_bot/presentation/widgets/dotIndicator.dart';
 
@@ -61,6 +62,25 @@ void main() {
       await tester.pump();
       expect(find.byType(DotIndicator), findsOneWidget);
       await tester.pumpAndSettle();
+    });
+
+    testWidgets('Successful AI Response', (tester) async {
+      when(() => fackgeminchatrepository.sendMessage(any())).thenAnswer((
+        _,
+      ) async {
+        return Future.delayed(Duration(seconds: 2), () {
+          return left(_getchateMessageModel());
+        });
+      });
+      await tester.pumpWidget(MaterialApp(home: ChatBotScreen()));
+      await tester.pumpAndSettle();
+      var textfaild = find.byType(ChatMessageInputBar);
+      await tester.enterText(textfaild, 'Hi Mafdy');
+      await tester.pumpAndSettle();
+      var send_icon = find.byKey(const Key('Send_Icon'));
+      await tester.tap(send_icon);
+      await tester.pumpAndSettle();
+      expect(find.byType(AiBubble), findsOneWidget);
     });
   });
 }

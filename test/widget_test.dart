@@ -55,7 +55,7 @@ void main() {
         (index) => Content(text: 'h1', type: 'text'),
       );
       //calling the rual request to trigger the request and test the code
-      var result = await geminiChatRepository.sendMessage(messages);
+      await geminiChatRepository.sendMessage(messages);
       // catch inter param of the inner function inside the request
       var Captured =
           verify(
@@ -80,7 +80,7 @@ void main() {
         (index) => Content(text: 'h1', type: 'text'),
       );
       //calling the rual request to trigger the request and test the code
-      var result = await geminiChatRepository.sendMessage(messages);
+      await geminiChatRepository.sendMessage(messages);
       // catch inter param of the inner function inside the request
       var Captured =
           verify(

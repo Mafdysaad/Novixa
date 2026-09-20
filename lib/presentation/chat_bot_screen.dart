@@ -11,7 +11,6 @@ import 'package:ai_chat_bot/presentation/widgets/chat_bot_app_bar.dart';
 import 'package:ai_chat_bot/presentation/widgets/chat_message_input_bar.dart';
 import 'package:ai_chat_bot/presentation/widgets/divider.dart';
 
-import 'package:ai_chat_bot/repositories/chat_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
