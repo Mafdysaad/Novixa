@@ -100,7 +100,7 @@ void main() async {
     geminiChatService = GeminiChatService(client: apickintMoking);
   });
   group('Retry  logic ', () {
-    test('success on first ateempt', () async {
+    test('success on first attempt', () async {
       when(
         () => apickintMoking.post(
           any(),

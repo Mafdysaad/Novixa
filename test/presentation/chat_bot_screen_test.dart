@@ -1,3 +1,4 @@
+import 'package:ai_chat_bot/core/error/errors.dart';
 import 'package:ai_chat_bot/core/service/service_locator.dart';
 import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
 import 'package:ai_chat_bot/models/chat_message_model/content.dart';
@@ -8,6 +9,7 @@ import 'package:ai_chat_bot/presentation/manger/cubit/send_message_cubit.dart';
 import 'package:ai_chat_bot/presentation/widgets/ai_bubble.dart';
 import 'package:ai_chat_bot/presentation/widgets/chat_message_input_bar.dart';
 import 'package:ai_chat_bot/presentation/widgets/dotIndicator.dart';
+import 'package:ai_chat_bot/presentation/widgets/fauiler_bubble.dart';
 
 import 'package:ai_chat_bot/repositories/gemini_chat_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -31,6 +33,10 @@ ChatMessageModel _getchateMessageModel() {
     object: 'gmin',
     model: 'dsns',
   );
+}
+
+ServerFailure _getServerFailurMessage() {
+  return ServerFailure('some thing is wrong');
 }
 
 void main() {
@@ -81,6 +87,60 @@ void main() {
       await tester.tap(send_icon);
       await tester.pumpAndSettle();
       expect(find.byType(AiBubble), findsOneWidget);
+    });
+    group('Failuer Ai Response', () {
+      testWidgets('Failuer AI Response', (tester) async {
+        when(() => fackgeminchatrepository.sendMessage(any())).thenAnswer((
+          _,
+        ) async {
+          return Future.delayed(Duration(seconds: 2), () {
+            return right(_getServerFailurMessage());
+          });
+        });
+        await tester.pumpWidget(MaterialApp(home: ChatBotScreen()));
+        await tester.pumpAndSettle();
+        var textfaild = find.byType(ChatMessageInputBar);
+        await tester.enterText(textfaild, 'Hi Mafdy');
+        await tester.pumpAndSettle();
+        var send_icon = find.byKey(const Key('Send_Icon'));
+        await tester.tap(send_icon);
+        await tester.pumpAndSettle();
+        expect(
+          find.descendant(
+            of: find.byType(FauilerBubble),
+            matching: find.text('Hi Mafdy'),
+          ),
+          findsOne,
+        );
+      });
+
+      testWidgets('Successful Retry on firs attempt', (tester) async {
+        int count = 0;
+        when(() => fackgeminchatrepository.sendMessage(any())).thenAnswer((
+          _,
+        ) async {
+          return Future.delayed(Duration(seconds: 2), () {
+            if (count == 1) {
+              return left(_getchateMessageModel());
+            }
+            count++;
+            return right(_getServerFailurMessage());
+          });
+        });
+        await tester.pumpWidget(MaterialApp(home: ChatBotScreen()));
+        await tester.pumpAndSettle();
+        var textfaild = find.byType(ChatMessageInputBar);
+        await tester.enterText(textfaild, 'Hi Mafdy');
+        await tester.pumpAndSettle();
+        var send_icon = find.byKey(const Key('Send_Icon'));
+        await tester.tap(send_icon);
+        await tester.pumpAndSettle();
+
+        var icon = find.byIcon(Icons.rotate_right_sharp);
+        await tester.tap(icon);
+        await tester.pumpAndSettle();
+        expect(find.byType(AiBubble), findsOneWidget);
+      });
     });
   });
 }
