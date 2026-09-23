@@ -61,10 +61,9 @@ class ChatMessageInputBar extends StatelessWidget {
               const SizedBox(width: 16),
               GestureDetector(
                 onTap: onSend,
-                child: SvgPicture.asset(
-                  figmaIconSendUrl,
-                  width: 24,
-                  height: 24,
+                child: Icon(
+                  Icons.arrow_right_sharp,
+                  size: 24,
                   key: const Key('Send_Icon'),
                 ),
               ),

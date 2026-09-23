@@ -41,7 +41,7 @@ class FauilerBubble extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -49,13 +49,15 @@ class FauilerBubble extends StatelessWidget {
               onPressed: onpressed,
               icon: Icon(Icons.rotate_right_sharp, size: 20, color: Colors.red),
             ),
-            Text(
-              errormessage,
-              style: TextStyle(
-                color: const Color(0xFF656565),
-                fontSize: 13,
-                height: 1.5,
-                fontWeight: FontWeight.w400,
+            Flexible(
+              child: Text(
+                errormessage,
+                style: TextStyle(
+                  color: const Color(0xFF656565),
+                  fontSize: 13,
+                  height: 1.5,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
           ],

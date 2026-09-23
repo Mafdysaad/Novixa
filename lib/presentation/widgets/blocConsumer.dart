@@ -23,6 +23,7 @@ class blocConsumerList extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: BlocConsumer<SendMessageCubit, SendMessageState>(
         listener: (context, state) {
+          debugPrint('STATE => ${state.runtimeType}');
           if (state is SendMessageSuccess) {
             messages.addAll(state.chatMessageModel.steps!.last.content!);
           }
@@ -35,6 +36,7 @@ class blocConsumerList extends StatelessWidget {
             );
           }
           if (state is SendMessageFailure) {
+            debugPrint('FAILURE MESSAGE => ${state.message}');
             return FauilerMessageList(
               scrollController: _scrollController,
               messages: messages,

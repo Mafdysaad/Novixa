@@ -1,5 +1,5 @@
 import 'package:ai_chat_bot/models/chat_message_model/chat_message_model.dart';
-import 'package:ai_chat_bot/models/chat_message_model/content.dart';
+
 import 'package:ai_chat_bot/services/clientserves/api_clinetservice.dart';
 import 'package:ai_chat_bot/services/clientserves/gemini_chat_service.dart';
 import 'package:dio/dio.dart';

@@ -9,22 +9,21 @@ import 'package:get_it/get_it.dart';
 final getIt = GetIt.instance;
 Future<void> setup() async {
   //core
-  getIt.registerLazySingleton<Dio>(
-    () =>
-        Dio(BaseOptions(baseUrl: 'https://generativelanguage.googleapis.com')),
+  getIt.registerSingleton<Dio>(
+    Dio(BaseOptions(baseUrl: 'https://generativelanguage.googleapis.com')),
   );
-  getIt.registerLazySingleton<ApiClientService>(
-    () => ApiClientService(dio: getIt<Dio>()),
+  getIt.registerSingleton<ApiClientService>(
+    ApiClientService(dio: getIt<Dio>()),
   );
 
   //Gemini service
-  getIt.registerLazySingleton<GeminiChatService>(
-    () => GeminiChatService(client: getIt<ApiClientService>()),
+  getIt.registerSingleton<GeminiChatService>(
+    GeminiChatService(client: getIt<ApiClientService>()),
   );
-  getIt.registerLazySingleton<ChatRepository>(
-    () => GeminiChatRepository(geminiChatService: getIt<GeminiChatService>()),
+  getIt.registerSingleton<ChatRepository>(
+    GeminiChatRepository(geminiChatService: getIt<GeminiChatService>()),
   );
   getIt.registerFactory<SendMessageCubit>(
-    () => SendMessageCubit(repository: getIt<GeminiChatRepository>()),
+    () => SendMessageCubit(repository: getIt<ChatRepository>()),
   );
 }

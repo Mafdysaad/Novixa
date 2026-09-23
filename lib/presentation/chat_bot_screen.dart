@@ -59,7 +59,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.from(alpha: 1, red: 1, green: 1, blue: 1),
       appBar: const ChatBotAppBar(),
       body: BlocProvider(
         create: (_) => getIt.get<SendMessageCubit>(),
